@@ -23,13 +23,9 @@ func InitWhiteList() {
 
 	whiteList = widget.NewEntry()
 	whiteList.SetPlaceHolder("Enter usernames separated by ,")
-	whiteList.Resize(fyne.NewSize(200, 0)) // Establecer ancho mínimo
-	entryContainer := container.NewStack(whiteList)
-	//configs, err := config.ReadConfig()
-	//if err != nil {
-	//TODO
-	//}
-	//whiteList.Text = configs.WhitelistConfig.RawWhitelist
+	whiteList.Resize(fyne.NewSize(200, 0))
+	//entryContainer := container.NewStack(whiteList)
+
 	updateWhitelist = widget.NewButton("Update whitelist", func() {
 		rawUsers := whiteList.Text
 		users := strings.Split(rawUsers, ",")
@@ -48,8 +44,8 @@ func InitWhiteList() {
 		whiteListCheck,
 		container.NewBorder(
 			nil, nil, nil,
-			updateWhitelist, // botón a la derecha
-			entryContainer,  // entry se expande
+			updateWhitelist,
+			whiteList,
 		),
 	)
 }

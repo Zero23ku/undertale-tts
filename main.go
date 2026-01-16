@@ -20,6 +20,7 @@ import (
 	"undertale-tts/internal/tiktok"
 	"undertale-tts/internal/twitch"
 	"undertale-tts/internal/web"
+	"undertale-tts/internal/whitelist"
 	"undertale-tts/internal/youtube"
 )
 
@@ -64,6 +65,7 @@ func main() {
 
 	stt.AppReference = &mainApp
 	stt.InitSTTWindow(mainApp)
+	whitelist.InitWhiteList()
 
 	common.InitCommandCheck()
 	common.InitKofiButton()
@@ -84,12 +86,13 @@ func main() {
 		),
 	)
 
-	commandContent := container.NewCenter(
+	commandContent := container.NewVBox(
 		container.NewVBox(
 			container.NewHBox(
 				common.ActivateCommand,
 				common.InputCommand,
 			),
+			whitelist.WhiteListContainer,
 		),
 	)
 	var footer *fyne.Container
