@@ -79,8 +79,6 @@ type AuthorDetails struct {
 	DisplayName string `json:"displayName"`
 }
 
-var ytWindowIsOpen = false
-
 const liveStreamingDetailsEndpoint = "https://www.googleapis.com/youtube/v3/videos"
 
 const liveStreamingGetChatMessages = "https://www.googleapis.com/youtube/v3/liveChat/messages"
@@ -191,9 +189,7 @@ func GetYTChannelInfo(ctx context.Context) {
 
 func InitYoutubeWindow(app fyne.App) {
 	YoutubeWindow = app.NewWindow("Youtube Integration (Alpha)")
-	YoutubeWindow.SetOnClosed(func() {
-		ytWindowIsOpen = false
-	})
+
 	/*
 		ytApiKeyInput := widget.NewEntry()
 		ytApiKeyInput.SetPlaceHolder("Enter your Youtube's API Key here")
@@ -240,11 +236,16 @@ func InitYoutubeWindow(app fyne.App) {
 
 	YoutubeWindow.SetContent(container.NewVBox( /*form,*/ formVide, centeredButton))
 	YoutubeWindow.Resize(fyne.NewSize(400, 100))
+	YoutubeWindow.SetOnClosed(func() {
+		YoutubeWindow = nil
+	})
 
 	ConnectYTButton = widget.NewButton("Connect to Youtube", func() {
-		if !ytWindowIsOpen {
+		if YoutubeWindow == nil {
+			InitYoutubeWindow(*AppReference)
 			YoutubeWindow.Show()
-			ytWindowIsOpen = true
+		} else {
+			YoutubeWindow.Show()
 		}
 
 	})

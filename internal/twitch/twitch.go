@@ -91,6 +91,7 @@ var Active = false
 var IsRedeemOptionActive = false
 
 var CTX context.Context
+var AppReference *fyne.App
 
 func GetAuthorization() {
 	var err error
@@ -165,9 +166,15 @@ func InitTwitchConfigWindows(app fyne.App) {
 
 	TwitchConfWindow.Resize(fyne.NewSize(400, 100))
 
+	TwitchConfWindow.SetOnClosed(func() {
+		TwitchConfWindow = nil
+	})
+
 	TwitchConnectButton = widget.NewButton("Connect to Twitch", func() {
-		if !twitchConfiWindowsIsOpen {
-			twitchConfiWindowsIsOpen = true
+		if TwitchConfWindow == nil {
+			InitTwitchConfigWindows(*AppReference)
+			TwitchConfWindow.Show()
+		} else {
 			TwitchConfWindow.Show()
 		}
 	})
