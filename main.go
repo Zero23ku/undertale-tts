@@ -8,13 +8,15 @@ import (
 	"fyne.io/fyne/v2/container"
 
 	"undertale-tts/internal/charselector"
+	"undertale-tts/internal/twitch"
+	"undertale-tts/internal/web"
 )
 
 var version = "v0.0.1"
 var updateTime = false
 
 func main() {
-	_, cancel := context.WithCancel(context.Background())
+	ctx, cancel := context.WithCancel(context.Background())
 	mainApp := app.New()
 	mainWindow := mainApp.NewWindow("Undertale Text to Speech - " + version)
 
@@ -22,6 +24,12 @@ func main() {
 		cancel()
 		os.Exit(0)
 	})
+
+	go func() {
+		web.StartWebServer()
+	}()
+	twitch.CTX = ctx
+	twitch.InitTwitchConfigWindows(mainApp)
 
 	charselector.InitTestingControllers(mainApp)
 
@@ -39,6 +47,9 @@ func main() {
 		container.NewVBox(
 
 			charSelectorContainer,
+			container.NewHBox(
+				twitch.TwitchConnectButton,
+			),
 		),
 	)
 
