@@ -11,6 +11,7 @@ import (
 	"undertale-tts/internal/charselector"
 	"undertale-tts/internal/chzzk"
 	"undertale-tts/internal/common"
+	"undertale-tts/internal/local"
 	"undertale-tts/internal/stt"
 	"undertale-tts/internal/tiktok"
 	"undertale-tts/internal/twitch"
@@ -56,6 +57,9 @@ func main() {
 	common.InitCommandCheck()
 	common.InitKofiButton()
 
+	local.AppReference = &mainApp
+	local.InitLocalWindow(mainApp)
+
 	charselector.InitTestingControllers(mainApp)
 
 	charSelectorContainer := container.NewCenter(
@@ -93,7 +97,7 @@ func main() {
 		container.New(
 			layout.NewBorderLayout(nil, footer, nil, nil),
 			footer,
-			container.NewVBox(mainContent, stt.STTButton),
+			container.NewVBox(mainContent, local.LocalButton, stt.STTButton),
 		),
 	)
 
