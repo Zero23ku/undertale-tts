@@ -6,6 +6,7 @@ require (
 	fyne.io/fyne/v2 v2.7.2
 	github.com/faiface/beep v1.1.0
 	github.com/joeyak/go-twitch-eventsub/v3 v3.0.1
+	github.com/johanvandegriff/youtube-live-chat-downloader/v2 v2.1.1
 )
 
 require (

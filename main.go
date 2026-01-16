@@ -10,6 +10,7 @@ import (
 	"undertale-tts/internal/charselector"
 	"undertale-tts/internal/twitch"
 	"undertale-tts/internal/web"
+	"undertale-tts/internal/youtube"
 )
 
 var version = "v0.0.1"
@@ -31,6 +32,10 @@ func main() {
 	twitch.CTX = ctx
 	twitch.InitTwitchConfigWindows(mainApp)
 
+	youtube.CTX = ctx
+	youtube.AppReference = &mainApp
+	youtube.InitYoutubeWindow(mainApp)
+
 	charselector.InitTestingControllers(mainApp)
 
 	charSelectorContainer := container.NewCenter(
@@ -48,7 +53,7 @@ func main() {
 
 			charSelectorContainer,
 			container.NewHBox(
-				twitch.TwitchConnectButton,
+				twitch.TwitchConnectButton, youtube.ConnectYTButton,
 			),
 		),
 	)
