@@ -8,6 +8,7 @@ import (
 	"fyne.io/fyne/v2/container"
 
 	"undertale-tts/internal/charselector"
+	"undertale-tts/internal/chzzk"
 	"undertale-tts/internal/tiktok"
 	"undertale-tts/internal/twitch"
 	"undertale-tts/internal/web"
@@ -42,6 +43,10 @@ func main() {
 	tiktok.AppReference = &mainApp
 	tiktok.InitTiktokWindow(mainApp)
 
+	chzzk.CTX = ctx
+	chzzk.AppReference = &mainApp
+	chzzk.InitChzzkWindow(mainApp)
+
 	charselector.InitTestingControllers(mainApp)
 
 	charSelectorContainer := container.NewCenter(
@@ -59,7 +64,7 @@ func main() {
 
 			charSelectorContainer,
 			container.NewHBox(
-				twitch.TwitchConnectButton, youtube.ConnectYTButton, tiktok.ConnectTiktokButton,
+				twitch.TwitchConnectButton, youtube.ConnectYTButton, tiktok.ConnectTiktokButton, chzzk.ConnectChzzkButton,
 			),
 		),
 	)

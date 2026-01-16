@@ -4,6 +4,7 @@ go 1.25.5
 
 require (
 	fyne.io/fyne/v2 v2.7.2
+	github.com/dhkimxx/GoChzzkChatCrawler v0.0.0-20250212124928-852ff59b9c6e
 	github.com/faiface/beep v1.1.0
 	github.com/joeyak/go-twitch-eventsub/v3 v3.0.1
 	github.com/johanvandegriff/youtube-live-chat-downloader/v2 v2.1.1
@@ -31,6 +32,7 @@ require (
 	github.com/gobwas/pool v0.2.1 // indirect
 	github.com/gobwas/ws v1.1.0 // indirect
 	github.com/godbus/dbus/v5 v5.1.0 // indirect
+	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/hack-pad/go-indexeddb v0.3.2 // indirect
 	github.com/hack-pad/safejs v0.1.0 // indirect
 	github.com/hajimehoshi/oto v0.7.1 // indirect
