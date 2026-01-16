@@ -6,9 +6,12 @@ import (
 
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 
 	"undertale-tts/internal/charselector"
 	"undertale-tts/internal/chzzk"
+	"undertale-tts/internal/common"
+	"undertale-tts/internal/stt"
 	"undertale-tts/internal/tiktok"
 	"undertale-tts/internal/twitch"
 	"undertale-tts/internal/web"
@@ -47,6 +50,12 @@ func main() {
 	chzzk.AppReference = &mainApp
 	chzzk.InitChzzkWindow(mainApp)
 
+	stt.AppReference = &mainApp
+	stt.InitSTTWindow(mainApp)
+
+	common.InitCommandCheck()
+	common.InitKofiButton()
+
 	charselector.InitTestingControllers(mainApp)
 
 	charSelectorContainer := container.NewCenter(
@@ -59,13 +68,32 @@ func main() {
 		),
 	)
 
-	mainWindow.SetContent(
+	commandContent := container.NewCenter(
 		container.NewVBox(
+			container.NewHBox(
+				common.ActivateCommand,
+				common.InputCommand,
+			),
+		),
+	)
 
-			charSelectorContainer,
+	footer := container.NewVBox(common.KofiButton)
+
+	mainContent := container.NewVBox(
+		charSelectorContainer,
+		container.NewVBox(
 			container.NewHBox(
 				twitch.TwitchConnectButton, youtube.ConnectYTButton, tiktok.ConnectTiktokButton, chzzk.ConnectChzzkButton,
 			),
+			commandContent,
+		),
+	)
+
+	mainWindow.SetContent(
+		container.New(
+			layout.NewBorderLayout(nil, footer, nil, nil),
+			footer,
+			container.NewVBox(mainContent, stt.STTButton),
 		),
 	)
 

@@ -22,9 +22,6 @@ func InitCommandCheck() {
 	ActivateCommand = widget.NewCheck("Use Command", func(value bool) {
 		IsCommandActive = value
 	})
-}
-
-func InitCommandInput() {
 	InputCommand = widget.NewEntry()
 	InputCommand.Text = TTSCommand
 }
