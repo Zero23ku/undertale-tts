@@ -10,21 +10,13 @@ import (
 )
 
 var KofiButton *widget.Button
-var RandomPitch *widget.Check
 var ActivateCommand *widget.Check
 var InputCommand *widget.Entry
 
 var IsCommandActive = false
 var Pitch = 1.2
-var IsPitchRandom = false
 var TTSCommand = "!tts"
 var kofiUrl *url.URL
-
-func InitRandomPitch() {
-	RandomPitch = widget.NewCheck("Random Pitch per user", func(value bool) {
-		IsPitchRandom = value
-	})
-}
 
 func InitCommandCheck() {
 	ActivateCommand = widget.NewCheck("Use Command", func(value bool) {
