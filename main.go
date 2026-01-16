@@ -67,6 +67,7 @@ func main() {
 
 	common.InitCommandCheck()
 	common.InitKofiButton()
+	common.InitDocsButton()
 
 	local.AppReference = &mainApp
 	local.InitLocalWindow(mainApp)
@@ -93,9 +94,9 @@ func main() {
 	)
 	var footer *fyne.Container
 	if updateTime {
-		footer = container.NewVBox(common.UpdateButton, common.KofiButton)
+		footer = container.NewVBox(common.UpdateButton, common.DocsButton, common.KofiButton)
 	} else {
-		footer = container.NewVBox(common.KofiButton)
+		footer = container.NewVBox(common.DocsButton, common.KofiButton)
 	}
 
 	mainContent := container.NewVBox(

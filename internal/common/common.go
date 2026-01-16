@@ -13,13 +13,14 @@ var KofiButton *widget.Button
 var ActivateCommand *widget.Check
 var InputCommand *widget.Entry
 
+var UpdateButton *widget.Button
+var DocsButton *widget.Button
+
 var IsCommandActive = false
-var Pitch = 1.2
 var TTSCommand = "!tts"
 var kofiUrl *url.URL
 var githubUrl *url.URL
-
-var UpdateButton *widget.Button
+var docsUrl *url.URL
 
 func InitCommandCheck() {
 	ActivateCommand = widget.NewCheck("Use Command", func(value bool) {
@@ -55,4 +56,16 @@ func InitUpdateButton() {
 		fyne.CurrentApp().OpenURL(githubUrl)
 	})
 
+}
+
+func InitDocsButton() {
+	docsUrl = &url.URL{
+		Scheme: "https",
+		Host:   "github.com",
+		Path:   "/Zero23ku/undertale-tts/blob/main/docs/docs.md",
+	}
+
+	DocsButton = widget.NewButton("How to use", func() {
+		fyne.CurrentApp().OpenURL(docsUrl)
+	})
 }

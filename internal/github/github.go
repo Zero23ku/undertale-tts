@@ -20,7 +20,7 @@ type Release struct {
 	NodeId     string `json:"node_id"`
 }
 
-var releaseURL = "https://api.github.com/repos/Zero23ku/ac-tts-golang/tags"
+var releaseURL = "https://api.github.com/repos/Zero23ku/undertale-tts/tags"
 
 func GetLatestReleaseVersion() string {
 	res, err := http.Get(releaseURL)
