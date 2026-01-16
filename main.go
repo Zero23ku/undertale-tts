@@ -3,7 +3,10 @@ package main
 import (
 	"context"
 	"os"
+	"strconv"
+	"strings"
 
+	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
@@ -11,6 +14,7 @@ import (
 	"undertale-tts/internal/charselector"
 	"undertale-tts/internal/chzzk"
 	"undertale-tts/internal/common"
+	"undertale-tts/internal/github"
 	"undertale-tts/internal/local"
 	"undertale-tts/internal/stt"
 	"undertale-tts/internal/tiktok"
@@ -26,6 +30,13 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	mainApp := app.New()
 	mainWindow := mainApp.NewWindow("Undertale Text to Speech - " + version)
+	onlineVersion := github.GetLatestReleaseVersion()
+	if onlineVersion != "" {
+		updateTime = needUpdate(version, onlineVersion)
+		if updateTime {
+			common.InitUpdateButton()
+		}
+	}
 
 	mainWindow.SetOnClosed(func() {
 		cancel()
@@ -80,8 +91,12 @@ func main() {
 			),
 		),
 	)
-
-	footer := container.NewVBox(common.KofiButton)
+	var footer *fyne.Container
+	if updateTime {
+		footer = container.NewVBox(common.UpdateButton, common.KofiButton)
+	} else {
+		footer = container.NewVBox(common.KofiButton)
+	}
 
 	mainContent := container.NewVBox(
 		charSelectorContainer,
@@ -102,4 +117,39 @@ func main() {
 	)
 
 	mainWindow.ShowAndRun()
+}
+
+func needUpdate(current string, online string) bool {
+
+	currentParts := getVersionSplitted(current)
+	onlineParts := getVersionSplitted(online)
+
+	mayorCurrent, _ := strconv.Atoi(currentParts[0])
+	mayorOnline, _ := strconv.Atoi(onlineParts[0])
+
+	minorCurrent, _ := strconv.Atoi(currentParts[1])
+	minorOnline, _ := strconv.Atoi(onlineParts[1])
+
+	patchCurrent, _ := strconv.Atoi(currentParts[2])
+	patchOnline, _ := strconv.Atoi(onlineParts[2])
+
+	if mayorCurrent < mayorOnline {
+		return true
+	}
+
+	if minorCurrent < minorOnline {
+		return true
+	}
+
+	if patchCurrent < patchOnline {
+		return true
+	}
+
+	return false
+
+}
+
+func getVersionSplitted(version string) []string {
+	trimmed := strings.TrimPrefix(version, "v")
+	return strings.Split(trimmed, ".")
 }

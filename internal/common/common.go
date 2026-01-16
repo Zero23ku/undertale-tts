@@ -17,6 +17,9 @@ var IsCommandActive = false
 var Pitch = 1.2
 var TTSCommand = "!tts"
 var kofiUrl *url.URL
+var githubUrl *url.URL
+
+var UpdateButton *widget.Button
 
 func InitCommandCheck() {
 	ActivateCommand = widget.NewCheck("Use Command", func(value bool) {
@@ -38,4 +41,18 @@ func InitKofiButton() {
 	KofiButton = widget.NewButtonWithIcon("Support me!", res, func() {
 		fyne.CurrentApp().OpenURL(kofiUrl)
 	})
+}
+
+func InitUpdateButton() {
+
+	githubUrl = &url.URL{
+		Scheme: "https",
+		Host:   "github.com",
+		Path:   "/Zero23ku/undertale-tts/releases",
+	}
+
+	UpdateButton = widget.NewButton("New Version Avaible", func() {
+		fyne.CurrentApp().OpenURL(githubUrl)
+	})
+
 }
